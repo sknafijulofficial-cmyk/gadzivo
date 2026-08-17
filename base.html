@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff5b20">
+  <title>{% block title %}Gadzivo{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="splash" id="splash" aria-hidden="true"><div class="splash-mark">G</div><strong>GADZIVO</strong><span>Shop smart. Live more.</span><i></i></div>
+  <div class="utility"><div class="shell"><span>Bangladesh's favourite local marketplace</span><div><a href="{{ url_for('products') }}">Save more on Gadzivo</a>{% if session.is_admin %}<a href="{{ url_for('admin_dashboard') }}">Seller Centre</a>{% endif %}</div></div></div>
+  <header class="site-header"><div class="shell header-row"><a class="brand" href="{{ url_for('index') }}" aria-label="Gadzivo home"><span class="brand-g">G</span><span>gadzivo</span></a><form class="top-search" method="get" action="{{ url_for('products') }}"><input type="search" name="q" placeholder="Search in Gadzivo" aria-label="Search products"><button aria-label="Search">⌕</button></form><a class="cart-link" href="{{ url_for('cart') }}">🛒 <span>Cart</span><b>{{ cart_count }}</b></a>{% if session.user_id %}<a class="account-link" href="{{ url_for('profile') }}">Hi, {{ session.user_name }}</a>{% else %}<a class="account-link" href="{{ url_for('login') }}">Login<br><small>or Register</small></a>{% endif %}</div><nav class="main-nav"><div class="shell"><a href="{{ url_for('products') }}">All products</a><a href="{{ url_for('products', category=1) }}">Electronics</a><a href="{{ url_for('products', category=2) }}">Fashion</a><a href="{{ url_for('products', sort='price_low') }}">Deals</a><a href="{{ url_for('my_orders') if session.user_id else url_for('login') }}">My orders</a>{% if session.is_admin %}<a href="{{ url_for('admin_dashboard') }}">Admin panel</a>{% endif %}</div></nav></header>
+  <main>{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="shell flash-wrap">{% for type,msg in messages %}<div class="flash {{ type }}">{{ msg }}</div>{% endfor %}</div>{% endif %}{% endwith %}{% block content %}{% endblock %}</main>
+  <button class="theme-toggle" type="button" id="themeToggle" aria-label="Choose page colour">🎨</button><aside class="theme-panel" id="themePanel" aria-label="Choose your colour theme"><button class="close-theme" id="closeTheme" type="button">×</button><strong>Choose your colour</strong><p>Your choice stays on this browser.</p><div class="theme-options"><button data-theme="sunset"><i></i>Sunset</button><button data-theme="ocean"><i></i>Ocean</button><button data-theme="violet"><i></i>Violet</button><button data-theme="night"><i></i>Night</button></div></aside>
+  <footer><div class="shell footer-grid"><div><a class="brand footer-brand" href="{{ url_for('index') }}"><span class="brand-g">G</span><span>gadzivo</span></a><p>Original local marketplace made for easy shopping in Bangladesh.</p></div><div><h4>Customer care</h4><a href="{{ url_for('products') }}">How to buy</a><a href="{{ url_for('my_orders') if session.user_id else url_for('login') }}">Track my order</a><a href="{{ url_for('login') }}">Returns & support</a></div><div><h4>Payment</h4><p>Cash on Delivery</p><p>Secure checkout</p></div><div><h4>Gadzivo guarantee</h4><p>✓ Verified products</p><p>✓ Fast local delivery</p></div></div><div class="shell copyright">© 2026 Gadzivo. All rights reserved.</div></footer>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
