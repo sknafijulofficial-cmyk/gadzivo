@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% block title %}Admin — Gadzivo{% endblock %}{% block content %}
+Admin dashboard
+ProductsOrders
+Products{{ stats.products }}
+Customers{{ stats.customers }}
+Pending orders{{ stats.orders }}
+Total sales৳{{ '%.0f'|format(stats.sales) }}
+Recent orders
+{% for o in orders %}{% else %}{% endfor %}
+Order	Customer	Total	Status
+#{{ o.id }}	{{ o.customer_name }}	৳{{ '%.0f'|format(o.total) }}	{{ o.status }}
+No orders yet.
+{% endblock %}
